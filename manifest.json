@@ -1,23 +1,19 @@
 {
   "manifest_version": 3,
   "name": "Parolefai",
-  "version": "0.1",
   "description": "Le parole le fa",
-  "permissions": [
-    "activeTab"
-  ],
+  "version": "0.0.1",
   "action": {
-    "default_popup": "index.html",
-    "default_title": "Mi clicchi pure signore, non indugi!"
+    "default_popup": "index.html"
   },
-  "icons": {
-    "16": "data/logo.png",
-    "48": "data/logo.png",
-    "128": "data/logo.png"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
+  "permissions": [
+    "scripting",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "content_scripts": [
     {
       "matches": [

@@ -1,3 +1,3 @@
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    console.log("stocazzo");
-});
+function getHTML() {
+    return document
+}
