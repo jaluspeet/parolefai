@@ -1,12 +1,23 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Parolefai",
   "version": "0.1",
-  "author": "Paolo Sellino",
   "description": "Le parole le fa",
   "permissions": [
-    ""
+    "activeTab"
   ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Mi clicchi pure signore, non indugi!"
+  },
+  "icons": {
+    "16": "data/logo.png",
+    "48": "data/logo.png",
+    "128": "data/logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -16,15 +27,5 @@
         "content.js"
       ]
     }
-  ],
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "browser_action": {
-    "default_icon": "logo.png",
-    "default_popup": "index.html",
-    "default_title": "Mi clicchi pure signore, non indugi!"
-  }
+  ]
 }

@@ -1,1 +1,3 @@
-// Handles all the webpage level activities (e.g. manipulating page data, etc.)
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    console.log("stocazzo");
+});
