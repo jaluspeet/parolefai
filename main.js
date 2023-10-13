@@ -51,6 +51,9 @@ button.addEventListener('click', async () => {
 
                             return false;
                         }
+                        else {
+                            console.log(`KEEPING WORD: ${word})`);
+                        }
                     }
                     return true;
                 });
@@ -65,3 +68,4 @@ button.addEventListener('click', async () => {
         },
     });
 });
+
