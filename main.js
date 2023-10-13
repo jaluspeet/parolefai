@@ -10,8 +10,6 @@ button.addEventListener('click', async () => {
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
         function: () => {
-            // Get the HTML content of the active tab
-            const html = document.documentElement.outerHTML;
 
             // Get all div elements with the class "keys-letter"
             const divs = document.querySelectorAll('.keys-letter');
