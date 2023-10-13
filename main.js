@@ -42,18 +42,38 @@ button.addEventListener('click', async () => {
                 return data;
             }
 
+            async function get_words() {
+                const words = await fetch_words();
+                const words_list = words.split('\n');
+
+                return words_list;
+            }
+
             async function filter_words() {
                 const words = await fetch_words();
                 const words_list = words.split('\n');
-                console.log(letters);
+
+
+                // Remove all words that contain letters not present in the letters array
                 const filtered_words = words_list.filter(word => {
-                    const word_letters = word.split('');
-                    return word_letters.every(letter => letters.includes(letter));
+                    for (let i = 0; i < word.length; i++) {
+                        if (!letters.includes(word[i])) {
+                            return false;
+                        }
+                    }
+                    return true;
                 });
-                console.log(filtered_words);
+
+                // Remove all words that do not contain the first letter of the letters array
+                const result = filtered_words.filter(word => word.includes(letters[0]));
+
+                return result;
             }
 
-            filter_words();
+            filter_words().then(filtered_words => {
+                console.log(filtered_words);
+            });
+
         },
     });
 });
