@@ -3,6 +3,7 @@ const button = document.getElementById('button');
 
 // Add an event listener to the button
 button.addEventListener('click', async () => {
+
     // Get the active tab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -18,8 +19,7 @@ button.addEventListener('click', async () => {
                 return data;
             }
 
-            // Loop through each div element and its child buttons,
-            // and add the text content of the buttons to the array
+            // Find today's letters
             const divs = document.querySelectorAll('.keys-letter');
             divs.forEach(div => {
                 const buttons = div.querySelectorAll('.keys-button');
@@ -33,7 +33,7 @@ button.addEventListener('click', async () => {
                 });
             });
 
-
+            // Filter the words
             async function filter_words() {
                 const words_raw = await fetch_words();
                 const words_list = words_raw.split('\n');
@@ -49,11 +49,15 @@ button.addEventListener('click', async () => {
                     return true;
                 });
 
+
+                // Log the results
                 console.log("LETTERS: " + letters);
-                console.log("WORDS: " + words_list);
+                // console.log("WORDS: " + words_list);
                 console.log("FILTERED: " + words_filtered);
             }
 
+
+            // main
             filter_words();
 
         },
