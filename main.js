@@ -45,7 +45,10 @@ button.addEventListener('click', async () => {
                 const words_filtered = words_list.filter(word => {
                     for (let i = 0; i < word.length; i++) {
                         if (!letters.includes(word[i])) {
-                            console.log(`REMOVING WORD: ${word} (contains letter ${word[i]} not in letters array)`);
+
+                            // WARNING: crashes
+                            // console.log(`REMOVING WORD: ${word} (contains letter ${word[i]} not in letters array)`);
+
                             return false;
                         }
                     }
