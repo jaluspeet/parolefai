@@ -38,26 +38,23 @@ button.addEventListener('click', async () => {
                 const words_raw = await fetch_words();
                 const words_list = words_raw.split('\n');
 
-                console.log("LETTERS: " + letters);
-                console.log("WORDS: " + words_list);
-
                 // Remove all words that contain letters not present in the letters array
                 const words_filtered = words_list.filter(word => {
                     for (let i = 0; i < word.length; i++) {
                         if (!letters.includes(word[i])) {
-
                             // WARNING: crashes
                             // console.log(`REMOVING WORD: ${word} (contains letter ${word[i]} not in letters array)`);
-
                             return false;
                         }
                         else {
-                            console.log(`KEEPING WORD: ${word})`);
+                            console.log("KEEPING WORD:" + word);
+                            return true;
                         }
                     }
-                    return true;
                 });
 
+                console.log("LETTERS: " + letters);
+                console.log("WORDS: " + words_list);
                 console.log("FILTERED: " + words_filtered);
             }
 
