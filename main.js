@@ -35,33 +35,27 @@ button.addEventListener('click', async () => {
                 });
             });
 
-            console.log(letters); // Log the array to the console
+            // Log the array to the console
+            console.log(letters);
 
-            const fs = require('fs');
+            async function fetch_words() {
+                const response = await fetch(chrome.runtime.getURL('data/parole.txt'));
+                const data = await response.text();
+                return data;
+            }
 
-            // Read the contents of the parole.txt file
-            fs.readFile('data/parole.txt', 'utf8', (err, data) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-
-                const words = data.split('\n'); // Split the contents into an array of words
-                const possibleWords = words.filter(word => {
-                    const lettersCopy = [...letters]; // Make a copy of the letters array
-                    for (const letter of word) {
-                        const index = lettersCopy.indexOf(letter); // Check if the letter is in the letters array
-                        if (index === -1) {
-                            return false; // If the letter is not in the letters array, the word cannot be made
-                        }
-                        lettersCopy.splice(index, 1); // Remove the letter from the letters array
-                    }
-                    return true; // If all letters in the word are in the letters array, the word can be made
+            async function filter_words() {
+                const words = await fetch_words();
+                const words_list = words.split('\n');
+                console.log(letters);
+                const filtered_words = words_list.filter(word => {
+                    const word_letters = word.split('');
+                    return word_letters.every(letter => letters.includes(letter));
                 });
+                console.log(filtered_words);
+            }
 
-                console.log(possibleWords); // Log the list of possible words to the console
-            });
-
+            filter_words();
         },
     });
 });

@@ -2,6 +2,16 @@
   "manifest_version": 3,
   "name": "Parolefai",
   "description": "Le parole le fa",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/data/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
   "version": "0.0.1",
   "action": {
     "default_popup": "index.html"
