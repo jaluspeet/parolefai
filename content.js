@@ -1,0 +1,3 @@
+function getHTML() {
+    return document
+}
