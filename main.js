@@ -42,13 +42,6 @@ button.addEventListener('click', async () => {
                 return data;
             }
 
-            async function get_words() {
-                const words = await fetch_words();
-                const words_list = words.split('\n');
-
-                return words_list;
-            }
-
             async function filter_words() {
                 const words = await fetch_words();
                 const words_list = words.split('\n');
