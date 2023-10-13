@@ -11,44 +11,36 @@ button.addEventListener('click', async () => {
         target: { tabId: tab.id },
         function: () => {
 
-            // Get all div elements with the class "keys-letter"
-            const divs = document.querySelectorAll('.keys-letter');
-
-            // Create an empty array to store the letters
             const letters = [];
-
-            // Loop through each div element and its child buttons,
-            // and add the text content of the buttons to the array
-            divs.forEach(div => {
-                const buttons = div.querySelectorAll('.keys-button');
-                buttons.forEach(button => {
-                    const text = button.textContent;
-                    if (button.id === 'keys-middle') {
-                        // Add the text content to the beginning of the array
-                        letters.unshift(text);
-                    } else {
-                        // Add the text content to the end of the array
-                        letters.push(text);
-                    }
-                });
-            });
-
-            // Log the array to the console
-            console.log(letters);
-
             async function fetch_words() {
                 const response = await fetch(chrome.runtime.getURL('data/parole.txt'));
                 const data = await response.text();
                 return data;
             }
 
+            // Loop through each div element and its child buttons,
+            // and add the text content of the buttons to the array
+            const divs = document.querySelectorAll('.keys-letter');
+            divs.forEach(div => {
+                const buttons = div.querySelectorAll('.keys-button');
+                buttons.forEach(button => {
+                    const text = button.textContent;
+                    if (button.id === 'keys-middle') {
+                        letters.unshift(text);
+                    } else {
+                        letters.push(text);
+                    }
+                });
+            });
+
+
             async function filter_words() {
-                const words = await fetch_words();
-                const words_list = words.split('\n');
+                const words_raw = await fetch_words();
+                const words_list = words_raw.split('\n');
 
 
                 // Remove all words that contain letters not present in the letters array
-                const filtered_words = words_list.filter(word => {
+                const words_filtered = words_list.filter(word => {
                     for (let i = 0; i < word.length; i++) {
                         if (!letters.includes(word[i])) {
                             return false;
@@ -57,15 +49,12 @@ button.addEventListener('click', async () => {
                     return true;
                 });
 
-                // Remove all words that do not contain the first letter of the letters array
-                const result = filtered_words.filter(word => word.includes(letters[0]));
-
-                return result;
+                console.log("LETTERS: " + letters);
+                console.log("WORDS: " + words_list);
+                console.log("FILTERED: " + words_filtered);
             }
 
-            filter_words().then(filtered_words => {
-                console.log(filtered_words);
-            });
+            filter_words();
 
         },
     });
