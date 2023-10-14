@@ -44,32 +44,28 @@ button.addEventListener('click', async () => {
                         if (!letters.includes(word[i])) {
                             return false;
                         }
-                        else {
-                            return true;
-                        }
                     }
+                    return true;
                 }).filter(word => word.includes(letters[0])); // Remove all words that do not contain the first letter
 
-                const newWindow = window.open("", "_blank", "width=200,height=100");
-                newWindow.document.write(`<html>${"STO FACENDO IL MIO LAVORO"}</html>`);
+
 
                 // Type each word in the filtered list
                 for (const word of words_filtered) {
-                    setTimeout(() => {
-                        for (let i = 0; i < word.length; i++) {
-                            const letter = word[i];
-                            setTimeout(() => {
-                                const event = new KeyboardEvent('keydown', { key: letter });
-                                document.dispatchEvent(event);
-                            }, i * 1000);
-                        }
 
-                        // update the content of the window with the new word
-                        newWindow.document.body.innerHTML = `<html><body>${word}</body></html>`;
-                        const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                    for (let i = 0; i < word.length; i++) {
+                        const letter = word[i];
+
+                        const event = new KeyboardEvent('keydown', { key: letter });
                         document.dispatchEvent(event);
+                        await new Promise(r => setTimeout(r, 20));
+                    }
 
-                    }, 0);
+                    // update the content of the window with the new word
+                    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                    document.dispatchEvent(event);
+
+
                 }
             }
 
