@@ -50,28 +50,30 @@ button.addEventListener('click', async () => {
                     }
                 }).filter(word => word.includes(letters[0])); // Remove all words that do not contain the first letter
 
-                return words_filtered;
-            }
+                const newWindow = window.open("", "_blank", "width=200,height=100");
+                newWindow.document.write(`<html>${"STO FACENDO IL MIO LAVORO"}</html>`);
 
-            // main
-            async function main() {
-                const words_filtered = await type_words();
+                // Type each word in the filtered list
                 for (const word of words_filtered) {
-                    for (let i = 0; i < word.length; i++) {
-                        const letter = word[i];
-                        setTimeout(() => {
-                            const event = new KeyboardEvent('keydown', { key: letter });
-                            document.dispatchEvent(event);
-                        }, i * 1000); // wait 100ms between every keypress
-                    }
                     setTimeout(() => {
+                        for (let i = 0; i < word.length; i++) {
+                            const letter = word[i];
+                            setTimeout(() => {
+                                const event = new KeyboardEvent('keydown', { key: letter });
+                                document.dispatchEvent(event);
+                            }, i * 1000);
+                        }
+
+                        // update the content of the window with the new word
+                        newWindow.document.body.innerHTML = `<html><body>${word}</body></html>`;
                         const event = new KeyboardEvent('keydown', { key: 'Enter' });
                         document.dispatchEvent(event);
-                    }, word.length * 1000); // wait 100ms after typing the whole word
+
+                    }, 0);
                 }
             }
 
-            main();
+            type_words();
 
         },
     });
