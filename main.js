@@ -57,12 +57,17 @@ button.addEventListener('click', async () => {
             async function main() {
                 const words_filtered = await type_words();
                 for (const word of words_filtered) {
-                    for (const letter of word) {
-                        const event = new KeyboardEvent('keydown', { key: letter });
-                        document.dispatchEvent(event);
+                    for (let i = 0; i < word.length; i++) {
+                        const letter = word[i];
+                        setTimeout(() => {
+                            const event = new KeyboardEvent('keydown', { key: letter });
+                            document.dispatchEvent(event);
+                        }, i * 1000); // wait 100ms between every keypress
                     }
-                    const event = new KeyboardEvent('keydown', { key: 'Enter' });
-                    document.dispatchEvent(event);
+                    setTimeout(() => {
+                        const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                        document.dispatchEvent(event);
+                    }, word.length * 1000); // wait 100ms after typing the whole word
                 }
             }
 
