@@ -34,7 +34,7 @@ button.addEventListener('click', async () => {
             });
 
             // Filter the words
-            async function filter_words() {
+            async function type_words() {
                 const words_raw = await fetch_words();
                 const words_list = words_raw.split('\n');
 
@@ -42,27 +42,32 @@ button.addEventListener('click', async () => {
                 const words_filtered = words_list.filter(word => {
                     for (let i = 0; i < word.length; i++) {
                         if (!letters.includes(word[i])) {
-                            // WARNING: crashes
-                            // console.log(`REMOVING WORD: ${word} (contains letter ${word[i]} not in letters array)`);
                             return false;
                         }
                         else {
-                            console.log("KEEPING WORD:" + word);
                             return true;
                         }
                     }
-                });
+                }).filter(word => word.includes(letters[0])); // Remove all words that do not contain the first letter
 
-                console.log("LETTERS: " + letters);
-                console.log("WORDS: " + words_list);
-                console.log("FILTERED: " + words_filtered);
+                return words_filtered;
             }
 
-
             // main
-            filter_words();
+            async function main() {
+                const words_filtered = await type_words();
+                for (const word of words_filtered) {
+                    for (const letter of word) {
+                        const event = new KeyboardEvent('keydown', { key: letter });
+                        document.dispatchEvent(event);
+                    }
+                    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                    document.dispatchEvent(event);
+                }
+            }
+
+            main();
 
         },
     });
 });
-
